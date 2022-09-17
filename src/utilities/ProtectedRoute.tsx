@@ -13,7 +13,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   isLoggedIn,
 }) => {
   if (loading) return <div>...Loading</div>;
-  console.log(isLoggedIn);
 
   return isLoggedIn ? children : <Navigate to="/login" />;
 };

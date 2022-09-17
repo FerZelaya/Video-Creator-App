@@ -18,6 +18,7 @@ export const setJWT = (accessToken: any) => {
   privateaxios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${accessToken}`;
+  console.log("jwt set");
 };
 
 export const naxios = publicaxios;

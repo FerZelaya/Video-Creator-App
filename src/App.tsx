@@ -10,6 +10,10 @@ import "./App.css";
 import Home from "./components/Home/Home";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import Login from "./components/Login/Login";
+import SignUp from "./components/SignUp/SignUp";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import VideoDetails from "./components/Videos/VideoDetails";
 
 export interface Tokens {
   accessToken: string;
@@ -25,6 +29,11 @@ const App: React.FC = () => {
   });
 
   const setLogin = (tokens: Tokens) => {
+    if (!tokens.accessToken) {
+      toast.error("Error completing the request!");
+      return;
+    }
+
     setAuthState({
       ...authState,
       accessToken: tokens.accessToken,
@@ -32,15 +41,15 @@ const App: React.FC = () => {
       isLogged: true,
     });
     setLocalStorage("accessToken", tokens.accessToken);
-    setLocalStorage("refershToken", tokens.refreshToken);
+    setLocalStorage("refreshToken", tokens.refreshToken);
     setJWT(authState.accessToken);
   };
 
   const setAuthLoggedIn = () => {
-    if (authState.accessToken !== "") {
-      setAuthState({ ...authState, isLogged: true });
-    }
-    console.log(authState);
+    setAuthState({
+      ...authState,
+      isLogged: authState.accessToken !== "" ? true : false,
+    });
   };
 
   useEffect(() => {
@@ -51,19 +60,48 @@ const App: React.FC = () => {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/login" element={<Login setLogin={setLogin} />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                setLogin={setLogin}
+                isLogged={authState.accessToken !== ""}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <SignUp
+                setLogin={setLogin}
+                isLogged={authState.accessToken !== ""}
+              />
+            }
+          />
           <Route
             path="/"
             element={
               <ProtectedRoute
                 loading={authState.loading}
-                isLoggedIn={authState.isLogged}
+                isLoggedIn={authState.accessToken !== ""}
               >
                 <Home />
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/video-details/:videoId"
+            element={
+              <ProtectedRoute
+                loading={authState.loading}
+                isLoggedIn={authState.accessToken !== ""}
+              >
+                <VideoDetails />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
+        <ToastContainer autoClose={8000} position="top-right" />
       </Router>
     </div>
   );

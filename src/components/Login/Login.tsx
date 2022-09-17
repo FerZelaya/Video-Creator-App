@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import "./login.css";
-import { login, LoginProps } from "../../services/login.services";
+import { login, UserLoginProps } from "../../services/users.services";
 import { Tokens } from "../../App";
-import { getLocalStorage } from "../../utilities/axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFCProps {
   setLogin: (tokens: Tokens) => void;
+  isLogged: boolean;
 }
 
-const Login: React.FC<LoginFCProps> = ({ setLogin }) => {
-  const [loginInfo, setLoginInfo] = useState<LoginProps>({
+const Login: React.FC<LoginFCProps> = ({ setLogin, isLogged }) => {
+  const [loginInfo, setLoginInfo] = useState<UserLoginProps>({
     email: "",
     password: "",
   });
+  const Navigate = useNavigate();
 
   const handleChange = (event: any) => {
     setLoginInfo({ ...loginInfo, [event.target.name]: event.target.value });
@@ -25,14 +26,14 @@ const Login: React.FC<LoginFCProps> = ({ setLogin }) => {
     e.preventDefault();
     const keys: Tokens = await login(loginInfo);
     setLogin(keys);
+    Navigate("/");
   };
 
-  //   useEffect(() => {
-  //     const jwt = getLocalStorage("accessToken");
-  //     if (jwt !== "") {
-  //       <Navigate to={"/"} />;
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (isLogged) {
+      Navigate("/");
+    }
+  }, [Navigate, isLogged]);
 
   return (
     <Container maxWidth="md">
