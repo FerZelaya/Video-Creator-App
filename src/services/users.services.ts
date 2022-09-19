@@ -1,6 +1,6 @@
 import { Tokens } from "../App";
 import { routes } from "../routes/routes";
-import { naxios, setJWT, setLocalStorage } from "../utilities/axios";
+import { naxios, paxios, setJWT, setLocalStorage } from "../utilities/axios";
 
 export interface UserLoginProps {
   email: string;
@@ -14,6 +14,15 @@ export interface UserSignUpProps {
   password: string;
   photoUrl: string;
 }
+
+export const getUserById = async (userId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+  return await paxios.get(routes.CreatorProfile(userId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
 
 export const login = async ({
   email,

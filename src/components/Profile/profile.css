@@ -1,0 +1,17 @@
+.divider {
+  margin-top: 0;
+  width: "100%" !important;
+}
+
+.divider::before,
+.divider::after {
+  top: 0% !important;
+}
+
+.display-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}

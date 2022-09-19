@@ -18,6 +18,16 @@ export const getAllPublishedVideos = async () => {
   });
 };
 
+export const getVideoDetails = async (videoId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.get(routes.VideoDetails(videoId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
 export const postNewVideo = async ({
   title,
   videoUrl,

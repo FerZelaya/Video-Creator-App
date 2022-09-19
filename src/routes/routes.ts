@@ -5,7 +5,8 @@ export const routes = {
   SignUpRoute: `${BASE_URL}/users/sign-up`,
   LogOut: `${BASE_URL}/users/logout`,
   RefreshToken: `${BASE_URL}/users/refresh`,
-  GetUserById: (userId: number) => `${BASE_URL}/users/get/email/${userId}`,
+  GetUserByEmail: (email: string) => `${BASE_URL}/users/get/email/${email}`,
+  GetUserById: (userId: number) => `${BASE_URL}/users/${userId}`,
   FollowCreator: (creatorId: number) => `${BASE_URL}/users/follow/${creatorId}`,
   UnFollowCreator: (creatorId: number) =>
     `${BASE_URL}/users/unfollow/${creatorId}`,

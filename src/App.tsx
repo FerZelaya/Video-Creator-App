@@ -14,6 +14,7 @@ import SignUp from "./components/SignUp/SignUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VideoDetails from "./components/Videos/VideoDetails";
+import CreatorProfile from "./components/Profile/CreatorProfile";
 
 export interface Tokens {
   accessToken: string;
@@ -97,6 +98,17 @@ const App: React.FC = () => {
                 isLoggedIn={authState.accessToken !== ""}
               >
                 <VideoDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/creator-profile/:userId"
+            element={
+              <ProtectedRoute
+                loading={authState.loading}
+                isLoggedIn={authState.accessToken !== ""}
+              >
+                <CreatorProfile />
               </ProtectedRoute>
             }
           />

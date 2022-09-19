@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { setNewTokens } from "../../services/users.services";
 import { getAllPublishedVideos } from "../../services/videos.services";
 import { Video } from "../../types/returnTypes";
@@ -12,15 +14,14 @@ const VideoList: React.FC = () => {
     const publishedVideos = await getAllPublishedVideos()
       .then((response) => response.data)
       .catch((error) => {
+        toast.success("Refreshing token. Please reload page.");
         setNewTokens();
-        // window.location.reload();
       });
     setListVideos(publishedVideos);
   };
 
   useEffect(() => {
     GetAllPublishedVideos();
-    console.log(listVideos);
   }, []);
 
   return (

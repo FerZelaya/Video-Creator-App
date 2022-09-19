@@ -15,7 +15,7 @@ export interface VideoCardProps {
   video: Video;
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
+const VideoCardForCreatorProfile: React.FC<VideoCardProps> = ({ video }) => {
   const videoDetailsURL = `/video-details/${video.id}`;
   useEffect(() => {}, []);
   return (
@@ -31,9 +31,6 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
         style={{ backgroundColor: "#102565", color: "#fff" }}
       >
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} gutterBottom>
-            Creator: {video.User.firstName} {video.User.lastName}
-          </Typography>
           <Typography variant="h5" component="div">
             {video.title}
           </Typography>
@@ -58,4 +55,4 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   );
 };
 
-export default VideoCard;
+export default VideoCardForCreatorProfile;
