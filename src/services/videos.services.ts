@@ -8,23 +8,14 @@ export interface PostVideoProps {
   videoUrl: string;
 }
 
-export const getAllPublishedVideos = async (): Promise<Video[]> => {
+export const getAllPublishedVideos = async () => {
   const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
 
-  const response = await paxios
-    .get(routes.GetAllPublishedVideos, {
-      headers: {
-        Authorization: accessToken,
-      },
-    })
-    .then((response) => response);
-
-  if (response.status === 401) {
-    await setNewTokens();
-    return [];
-  }
-
-  return response.data;
+  return await paxios.get(routes.GetAllPublishedVideos, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
 };
 
 export const postNewVideo = async ({

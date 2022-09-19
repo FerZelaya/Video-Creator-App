@@ -1,6 +1,5 @@
 import { Tokens } from "../App";
 import { routes } from "../routes/routes";
-import { FailedHTTPResponse } from "../types/returnTypes";
 import { naxios, setJWT, setLocalStorage } from "../utilities/axios";
 
 export interface UserLoginProps {
