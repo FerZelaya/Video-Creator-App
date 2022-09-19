@@ -2,7 +2,7 @@
 
 ## Installation
 
-- Create .env with the same variable as .env.development and use 'https://vcp-api.herokuapp.com' as value, then:
+- Create .env with the same variable as .env.development and use 'https://vcp-ui.herokuapp.com' as value, then:
 
 ### `npm i`
 
