@@ -86,14 +86,11 @@ const CreatorProfile: React.FC = () => {
             justifyContent={"center"}
             spacing={2}
             sx={{ marginTop: 3 }}
+            className="videos-container"
           >
             {userData.videos.length > 0 ? (
               userData.videos.map((video, index) => {
-                return (
-                  <div>
-                    <VideoCardForCreatorProfile key={index} video={video} />
-                  </div>
-                );
+                return <VideoCardForCreatorProfile key={index} video={video} />;
               })
             ) : (
               <div>No videos</div>

@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VideoDetails from "./components/Videos/VideoDetails";
 import CreatorProfile from "./components/Profile/CreatorProfile";
+import Profile from "./components/Profile/Profile";
 
 export interface Tokens {
   accessToken: string;
@@ -112,8 +113,19 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                loading={authState.loading}
+                isLoggedIn={authState.accessToken !== ""}
+              >
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-        <ToastContainer autoClose={8000} position="top-right" />
+        <ToastContainer autoClose={3000} position="top-right" />
       </Router>
     </div>
   );

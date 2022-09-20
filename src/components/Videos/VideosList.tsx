@@ -25,7 +25,7 @@ const VideoList: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Container component="main">
         <Grid container justifyContent={"center"} spacing={2}>
           {listVideos && Array.isArray(listVideos) ? (

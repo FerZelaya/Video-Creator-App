@@ -20,4 +20,5 @@ export const routes = {
   LikeViedeo: (videoId: number) => `${BASE_URL}/videos/like/${videoId}`,
   CreatorProfile: (userId: number) =>
     `${BASE_URL}/videos/creatorProfile/${userId}`,
+  LoggedUserProfile: `${BASE_URL}/videos/userCreatorProfile`,
 };

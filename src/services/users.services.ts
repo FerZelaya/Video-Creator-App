@@ -24,6 +24,15 @@ export const getUserById = async (userId: number) => {
   });
 };
 
+export const loggedUserProfile = async () => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+  return await paxios.get(routes.LoggedUserProfile, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
 export const login = async ({
   email,
   password,

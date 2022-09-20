@@ -1,6 +1,6 @@
 import { routes } from "../routes/routes";
 import { Video } from "../types/returnTypes";
-import { naxios, paxios } from "../utilities/axios";
+import { paxios } from "../utilities/axios";
 import { setNewTokens } from "./users.services";
 
 export interface PostVideoProps {
@@ -37,7 +37,7 @@ export const postNewVideo = async ({
   const response = await paxios
     .post(
       routes.PostVideo,
-      { title, videoUrl, published: true },
+      { title, videoUrl, published: false },
       {
         headers: {
           Authorization: accessToken,
