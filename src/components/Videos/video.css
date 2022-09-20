@@ -35,5 +35,15 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  width: 100%;
+  width: 70%;
+}
+
+.divider {
+  margin-top: 0;
+  width: "100%" !important;
+}
+
+.divider::before,
+.divider::after {
+  top: 0% !important;
 }
