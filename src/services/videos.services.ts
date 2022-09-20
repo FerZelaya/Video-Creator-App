@@ -86,7 +86,7 @@ export const editVideo = async ({
 export const likeVideo = async (videoId: number) => {
   const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
 
-  return await paxios.post(routes.LikeVideo(videoId), {
+  return await paxios.get(routes.LikeVideo(videoId), {
     headers: {
       Authorization: accessToken,
     },

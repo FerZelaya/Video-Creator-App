@@ -2,13 +2,14 @@
 import { Container, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { setNewTokens } from "../../services/users.services";
+import { loggedUserProfile, setNewTokens } from "../../services/users.services";
 import { getAllPublishedVideos } from "../../services/videos.services";
-import { Video } from "../../types/returnTypes";
+import { CreatorProfileProp, Video } from "../../types/returnTypes";
 import VideoCard from "./VideoCard";
 
 const VideoList: React.FC = () => {
   const [listVideos, setListVideos] = useState<Video[]>([]);
+  const [likedVideos, setLikedVideos] = useState<Video[]>([]);
 
   const GetAllPublishedVideos = async () => {
     const publishedVideos = await getAllPublishedVideos()
@@ -18,6 +19,17 @@ const VideoList: React.FC = () => {
         setNewTokens();
       });
     setListVideos(publishedVideos);
+    GetUserLikedVideos();
+  };
+  const GetUserLikedVideos = async () => {
+    const userDetails: CreatorProfileProp = await loggedUserProfile()
+      .then((response) => response.data)
+      .catch((error: Error) => {
+        console.log(error.message);
+        toast.success("Refreshing token. Please reload page.");
+        setNewTokens();
+      });
+    setLikedVideos(userDetails.user.likedVideos);
   };
 
   useEffect(() => {
@@ -31,7 +43,13 @@ const VideoList: React.FC = () => {
           {listVideos && Array.isArray(listVideos) ? (
             listVideos.map(
               (video: Video, index: React.Key | null | undefined) => {
-                return <VideoCard key={index} video={video} />;
+                return (
+                  <VideoCard
+                    key={index}
+                    video={video}
+                    likedVideos={likedVideos}
+                  />
+                );
               },
             )
           ) : (

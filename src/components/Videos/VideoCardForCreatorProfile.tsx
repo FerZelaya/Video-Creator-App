@@ -39,8 +39,8 @@ const VideoCardForCreatorProfile: React.FC<VideoCardProps> = ({
   const [minCardWidth, setMinCardWidth] = useState<number>(330);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [videoInputs, setVideoInputs] = useState<PostVideoProps>({
-    title: "",
-    videoUrl: "",
+    title: video.title,
+    videoUrl: video.videoUrl,
     videoId: video.id,
   });
   const videoDetailsURL = `/video-details/${video.id}`;
@@ -143,30 +143,32 @@ const VideoCardForCreatorProfile: React.FC<VideoCardProps> = ({
           </Link>
 
           {isLoggedUser && (
-            <IconButton
-              onClick={() =>
-                video.published
-                  ? unPublishVideo(video.id)
-                  : publishVideo(video.id)
-              }
-            >
-              {video.published ? (
-                <FiDownloadCloud color="red" />
-              ) : (
-                <FiUploadCloud color="#fff" />
-              )}
-            </IconButton>
+            <>
+              <IconButton
+                onClick={() =>
+                  video.published
+                    ? unPublishVideo(video.id)
+                    : publishVideo(video.id)
+                }
+              >
+                {video.published ? (
+                  <FiDownloadCloud color="red" />
+                ) : (
+                  <FiUploadCloud color="#fff" />
+                )}
+              </IconButton>
+              <IconButton onClick={() => handleClickOpen(true)}>
+                <FiEdit color="#fff" />
+              </IconButton>
+            </>
           )}
-          <IconButton onClick={() => handleClickOpen(true)}>
-            <FiEdit color="#fff" />
-          </IconButton>
         </CardActions>
       </Card>
       <Dialog open={openEdit} onClose={() => handleClickOpen(false)}>
         <DialogTitle>Edit Video</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
+            focused
             margin="dense"
             id="title"
             label="Title"
@@ -179,7 +181,7 @@ const VideoCardForCreatorProfile: React.FC<VideoCardProps> = ({
             onChange={handleChange}
           />
           <TextField
-            autoFocus
+            focused
             margin="dense"
             id="videoUrl"
             label="Video URL"

@@ -33,6 +33,26 @@ export const loggedUserProfile = async () => {
   });
 };
 
+export const followCreator = async (creatorId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.get(routes.FollowCreator(creatorId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
+export const unFollowCreator = async (creatorId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.get(routes.UnFollowCreator(creatorId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
 export const login = async ({
   email,
   password,
@@ -84,8 +104,6 @@ export const refreshTokensForUser = async () => {
 };
 
 export const setNewTokens = async () => {
-  console.log("here");
-
   const newTokens = await refreshTokensForUser();
   setLocalStorage("accessToken", newTokens.accessToken);
   setLocalStorage("refreshToken", newTokens.refreshToken);
