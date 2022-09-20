@@ -84,7 +84,13 @@ const Profile: React.FC = () => {
           >
             {userData.videos.length > 0 ? (
               userData.videos.map((video, index) => {
-                return <VideoCardForCreatorProfile key={index} video={video} />;
+                return (
+                  <VideoCardForCreatorProfile
+                    userId={userData.user.id}
+                    key={index}
+                    video={video}
+                  />
+                );
               })
             ) : (
               <div>No videos</div>

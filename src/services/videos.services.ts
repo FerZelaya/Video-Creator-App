@@ -6,6 +6,7 @@ import { setNewTokens } from "./users.services";
 export interface PostVideoProps {
   title: string;
   videoUrl: string;
+  videoId?: number;
 }
 
 export const getAllPublishedVideos = async () => {
@@ -22,6 +23,16 @@ export const getVideoDetails = async (videoId: number) => {
   const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
 
   return await paxios.get(routes.VideoDetails(videoId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
+export const publishOrUnpublishVideo = async (videoId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.get(routes.PublishOrUnpublishVideo(videoId), {
     headers: {
       Authorization: accessToken,
     },
@@ -52,4 +63,32 @@ export const postNewVideo = async ({
   }
 
   return response.data;
+};
+
+export const editVideo = async ({
+  title,
+  videoUrl,
+  videoId,
+}: PostVideoProps): Promise<Video> => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.put(
+    routes.EditVideo(videoId ?? 0),
+    { title, videoUrl, published: false },
+    {
+      headers: {
+        Authorization: accessToken,
+      },
+    },
+  );
+};
+
+export const likeVideo = async (videoId: number) => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.post(routes.LikeVideo(videoId), {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
 };

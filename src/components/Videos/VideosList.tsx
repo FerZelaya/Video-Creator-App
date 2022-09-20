@@ -13,7 +13,7 @@ const VideoList: React.FC = () => {
   const GetAllPublishedVideos = async () => {
     const publishedVideos = await getAllPublishedVideos()
       .then((response) => response.data)
-      .catch((error) => {
+      .catch(() => {
         toast.success("Refreshing token. Please reload page.");
         setNewTokens();
       });

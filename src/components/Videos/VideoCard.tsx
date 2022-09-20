@@ -4,11 +4,16 @@ import {
   CardActions,
   CardContent,
   Grid,
+  IconButton,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { setNewTokens } from "../../services/users.services";
+import { likeVideo } from "../../services/videos.services";
 import { Video } from "../../types/returnTypes";
+import { FiThumbsUp } from "react-icons/fi";
 import "./video.css";
 
 export interface VideoCardProps {
@@ -17,12 +22,29 @@ export interface VideoCardProps {
 
 const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   const videoDetailsURL = `/video-details/${video.id}`;
+
+  const onClickLikeVideo = async (videoId: number) => {
+    const result = await likeVideo(videoId)
+      .then((response) => response.data)
+      .catch(() => {
+        toast.success("Refreshing token. Please reload page.");
+        setNewTokens();
+      });
+    if (result === true) {
+      toast.success("Video liked successfully!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    } else {
+      toast.error("Error liking video");
+    }
+  };
   useEffect(() => {}, []);
   return (
     <Grid item>
       <Card
         sx={{
-          minWidth: 330,
+          minWidth: 370,
           minHeight: 170,
           justifyContent: "center",
           display: "flex",
@@ -52,6 +74,9 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
           <Link className="viewLink" to={videoDetailsURL}>
             <Button size="small">Learn More</Button>
           </Link>
+          <IconButton onClick={() => onClickLikeVideo(video.id)}>
+            <FiThumbsUp color="#fff" />
+          </IconButton>
         </CardActions>
       </Card>
     </Grid>

@@ -17,7 +17,7 @@ export const routes = {
   EditVideo: (videoId: number) => `${BASE_URL}/videos/edit/${videoId}`,
   PublishOrUnpublishVideo: (videoId: number) =>
     `${BASE_URL}/videos/publish/${videoId}`,
-  LikeViedeo: (videoId: number) => `${BASE_URL}/videos/like/${videoId}`,
+  LikeVideo: (videoId: number) => `${BASE_URL}/videos/like/${videoId}`,
   CreatorProfile: (userId: number) =>
     `${BASE_URL}/videos/creatorProfile/${userId}`,
   LoggedUserProfile: `${BASE_URL}/videos/userCreatorProfile`,
