@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ setLogout }) => {
     } else {
       const video: Video = await postNewVideo(videoInputs);
       if (video) {
-        window.location.reload();
+        toast.success("Video Posted! Go to your profile to publish it.");
       } else {
         toast.error("Error posting video");
       }
