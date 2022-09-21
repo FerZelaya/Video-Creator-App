@@ -53,6 +53,16 @@ export const unFollowCreator = async (creatorId: number) => {
   });
 };
 
+export const logoutUser = async () => {
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")!}`;
+
+  return await paxios.get(routes.LogOut, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+};
+
 export const login = async ({
   email,
   password,

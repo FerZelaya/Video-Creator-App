@@ -21,6 +21,9 @@ export interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
+export interface LogoutProp {
+  setLogout?: () => void;
+}
 
 const App: React.FC = () => {
   const [authState, setAuthState] = useState({
@@ -45,6 +48,18 @@ const App: React.FC = () => {
     setLocalStorage("accessToken", tokens.accessToken);
     setLocalStorage("refreshToken", tokens.refreshToken);
     setJWT(authState.accessToken);
+  };
+
+  const setLogout = () => {
+    setAuthState({
+      ...authState,
+      accessToken: "",
+      refreshToken: "",
+      isLogged: false,
+    });
+    removeLocalStorage("accessToken");
+    removeLocalStorage("refreshToken");
+    setJWT("");
   };
 
   const setAuthLoggedIn = () => {
@@ -87,7 +102,7 @@ const App: React.FC = () => {
                 loading={authState.loading}
                 isLoggedIn={authState.accessToken !== ""}
               >
-                <Home />
+                <Home setLogout={setLogout} />
               </ProtectedRoute>
             }
           />
@@ -98,7 +113,7 @@ const App: React.FC = () => {
                 loading={authState.loading}
                 isLoggedIn={authState.accessToken !== ""}
               >
-                <VideoDetails />
+                <VideoDetails setLogout={setLogout} />
               </ProtectedRoute>
             }
           />
@@ -109,7 +124,7 @@ const App: React.FC = () => {
                 loading={authState.loading}
                 isLoggedIn={authState.accessToken !== ""}
               >
-                <CreatorProfile />
+                <CreatorProfile setLogout={setLogout} />
               </ProtectedRoute>
             }
           />
@@ -120,12 +135,12 @@ const App: React.FC = () => {
                 loading={authState.loading}
                 isLoggedIn={authState.accessToken !== ""}
               >
-                <Profile />
+                <Profile setLogout={setLogout} />
               </ProtectedRoute>
             }
           />
         </Routes>
-        <ToastContainer autoClose={3000} position="top-right" />
+        <ToastContainer autoClose={2000} position="top-right" />
       </Router>
     </div>
   );

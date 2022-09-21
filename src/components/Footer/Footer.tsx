@@ -16,8 +16,14 @@ import { postNewVideo, PostVideoProps } from "../../services/videos.services";
 import { Video } from "../../types/returnTypes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logoutUser } from "../../services/users.services";
+import { removeLocalStorage, setJWT } from "../../utilities/axios";
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  setLogout?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ setLogout }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [videoInputs, setVideoInputs] = useState<PostVideoProps>({
     title: "",
@@ -42,13 +48,18 @@ export const Footer: React.FC = () => {
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const onClickLogout = async () => {
+    await logoutUser();
+
+    setLogout?.();
+
+    Navigate("/login");
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleClickOpen = (open: boolean) => {
+    setOpen(open);
   };
+
   return (
     <footer>
       <nav>
@@ -63,17 +74,15 @@ export const Footer: React.FC = () => {
               <FiUser size="2em" />
             </NavLink>
           </li>
-          <li onClick={handleClickOpen}>
+          <li onClick={() => handleClickOpen(true)}>
             <FiPlus size="2em" />
           </li>
-          <li>
-            <NavLink to="/signout">
-              <FiLogOut size="2em" />
-            </NavLink>
+          <li onClick={() => onClickLogout()}>
+            <FiLogOut size="2em" />
           </li>
         </ul>
       </nav>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={() => handleClickOpen(false)}>
         <DialogTitle>Add New Video</DialogTitle>
         <DialogContent>
           <TextField
@@ -104,7 +113,7 @@ export const Footer: React.FC = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={() => handleClickOpen(false)}>Cancel</Button>
           <Button onClick={onClickPostVideo}>Post</Button>
         </DialogActions>
       </Dialog>

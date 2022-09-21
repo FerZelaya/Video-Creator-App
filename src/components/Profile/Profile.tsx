@@ -10,13 +10,14 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { LogoutProp } from "../../App";
 import { loggedUserProfile, setNewTokens } from "../../services/users.services";
 import { CreatorProfileProp } from "../../types/returnTypes";
 import { Page } from "../Page/Page";
 import TabPanel from "../TabPanel/TabPanel";
 import VideoCardForCreatorProfile from "../Videos/VideoCardForCreatorProfile";
 
-const Profile: React.FC = () => {
+const Profile: React.FC<LogoutProp> = ({ setLogout }) => {
   const [tabValue, setTabValue] = useState(0);
   const [userData, setUserData] = useState<CreatorProfileProp>({
     user: {
@@ -55,7 +56,7 @@ const Profile: React.FC = () => {
   }, []);
 
   return (
-    <Page showFooter={true}>
+    <Page showFooter={true} setLogout={setLogout}>
       {userData ? (
         <Container
           maxWidth="lg"

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container, Grid } from "@mui/material";
+import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { loggedUserProfile, setNewTokens } from "../../services/users.services";
@@ -14,9 +15,13 @@ const VideoList: React.FC = () => {
   const GetAllPublishedVideos = async () => {
     const publishedVideos = await getAllPublishedVideos()
       .then((response) => response.data)
-      .catch(() => {
-        toast.success("Refreshing token. Please reload page.");
-        setNewTokens();
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          toast.success("Refreshing token. Please reload page.");
+          setNewTokens();
+        } else {
+          toast.error("Error with http request");
+        }
       });
     setListVideos(publishedVideos);
     GetUserLikedVideos();
@@ -24,10 +29,13 @@ const VideoList: React.FC = () => {
   const GetUserLikedVideos = async () => {
     const userDetails: CreatorProfileProp = await loggedUserProfile()
       .then((response) => response.data)
-      .catch((error: Error) => {
-        console.log(error.message);
-        toast.success("Refreshing token. Please reload page.");
-        setNewTokens();
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          toast.success("Refreshing token. Please reload page.");
+          setNewTokens();
+        } else {
+          toast.error("Error with http request");
+        }
       });
     setLikedVideos(userDetails.user.likedVideos);
   };

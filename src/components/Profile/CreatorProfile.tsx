@@ -24,8 +24,9 @@ import VideoCardForCreatorProfile from "../Videos/VideoCardForCreatorProfile";
 import { RiUserFollowFill, RiUserUnfollowFill } from "react-icons/ri";
 import "./profile.css";
 import { AxiosError } from "axios";
+import { LogoutProp } from "../../App";
 
-const CreatorProfile: React.FC = () => {
+const CreatorProfile: React.FC<LogoutProp> = ({ setLogout }) => {
   const [isAlreadyFollowd, setIsAlreadyFollowd] = useState<boolean>(false);
   const [userData, setUserData] = useState<CreatorProfileProp>({
     user: {
@@ -146,7 +147,7 @@ const CreatorProfile: React.FC = () => {
   }, []);
 
   return (
-    <Page showFooter={true}>
+    <Page showFooter={true} setLogout={setLogout}>
       {userData ? (
         <Container
           maxWidth="xl"

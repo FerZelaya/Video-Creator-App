@@ -3,15 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LogoutProp } from "../../App";
 import { setNewTokens } from "../../services/users.services";
 import { getVideoDetails } from "../../services/videos.services";
 import { Video } from "../../types/returnTypes";
 import { Page } from "../Page/Page";
 import "./video.css";
 
-interface VideoDetailsProps {}
-
-const VideoDetails: React.FC<VideoDetailsProps> = () => {
+const VideoDetails: React.FC<LogoutProp> = ({ setLogout }) => {
   const [videoDetails, setVideoDetails] = useState<Video>();
   const { videoId } = useParams();
   const creatorFullName = `${videoDetails?.User.firstName} ${videoDetails?.User.lastName}`;
@@ -32,7 +31,7 @@ const VideoDetails: React.FC<VideoDetailsProps> = () => {
     GetVideoDetails();
   }, []);
   return (
-    <Page showFooter={true}>
+    <Page showFooter={true} setLogout={setLogout}>
       {videoDetails?.id ? (
         <Container
           maxWidth="lg"
